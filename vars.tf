@@ -3,3 +3,9 @@ variable "COMPONENT" {}
 variable "ENV" {}
 variable "AZ" {}
 variable "SUBNET_CIDR_BLOCK" {}
+variable "DEFAULT_VPC_ID" {}
+variable "DEFAULT_VPC_CIDR_BLOCK" {}
+variable "TGW_ID" {}
+variable "TGW_DEFAULT_ATTACHMENT_ID" {}
+variable "TGW_DEFAULT_ROUTE_TABLE_ID" {}
+variable "PUBLIC_ROUTE_TABLE_ID_DEFAULT_VPC" {}
