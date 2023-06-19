@@ -14,6 +14,8 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "app-vpc" {
   }
   subnet_ids         = aws_subnet.main.*.id
   transit_gateway_id = data.terraform_remote_state.tgw.outputs.TGW_ID
+  transit_gateway_default_route_table_association = false
+  transit_gateway_default_route_table_propagation = false
   vpc_id             = aws_vpc.main.id
 }
 
