@@ -45,8 +45,8 @@ resource "aws_route_table" "app-vpc" {
   vpc_id = aws_vpc.main.id
 
   route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = data.terraform_remote_state.tgw.outputs.TGW_ID
+    cidr_block                = "0.0.0.0/0"
+    transit_gateway_id        = data.terraform_remote_state.tgw.outputs.TGW_ID
   }
 
   tags = {
