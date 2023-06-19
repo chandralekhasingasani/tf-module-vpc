@@ -10,7 +10,7 @@ data "terraform_remote_state" "tgw" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "app-vpc" {
 
   tags = {
-    Name = "tgw-${var.COMPONENT}-vpc-${ENV}"
+    Name = "tgw-${var.COMPONENT}-vpcc-${ENV}"
   }
   subnet_ids         = aws_subnet.main.*.id
   transit_gateway_id = data.terraform_remote_state.tgw.outputs.TGW_ID
