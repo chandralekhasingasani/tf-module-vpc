@@ -10,7 +10,7 @@ data "terraform_remote_state" "tgw" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "app-vpc" {
 
   tags = {
-    Name = "tgw-${var.COMPONENT}-vpcc-${ENV}"
+    Name = "tgw-${var.COMPONENT}-vpcc-${var.ENV}"
   }
   subnet_ids         = aws_subnet.main.*.id
   transit_gateway_id = data.terraform_remote_state.tgw.outputs.TGW_ID
@@ -19,7 +19,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "app-vpc" {
 
 resource "aws_ec2_transit_gateway_route_table" "app-vpc" {
   tags = {
-    Name = "tgw-rt-${var.COMPONENT}-vpc-${ENV}"
+    Name = "tgw-rt-${var.COMPONENT}-vpc-${var.ENV}"
   }
   transit_gateway_id = data.terraform_remote_state.tgw.outputs.TGW_ID
 }
@@ -61,7 +61,8 @@ resource "aws_route_table_association" "private-rt" {
 }
 
 resource "aws_route" "route-default-public-subnet" {
+  count                     = length(aws_subnet.main.*.id)
   route_table_id            = data.terraform_remote_state.tgw.outputs.PUBLIC_ROUTE_TABLE_ID_DEFAULT_VPC
-  destination_cidr_block    = aws_subnet.main.cidr_block
+  destination_cidr_block    = element(aws_subnet.main.*.cidr_block, count.index)
   transit_gateway_id        = data.terraform_remote_state.tgw.outputs.TGW_ID
 }
