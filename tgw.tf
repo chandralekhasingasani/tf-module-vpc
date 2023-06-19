@@ -21,7 +21,7 @@ resource "aws_ec2_transit_gateway_route_table" "app-vpc" {
   tags = {
     Name = "tgw-rt-${var.COMPONENT}-vpc-${ENV}"
   }
-  transit_gateway_id = var.TGW_ID
+  transit_gateway_id = data.terraform_remote_state.tgw.outputs.TGW_ID
 }
 
 resource "aws_ec2_transit_gateway_route_table_association" "app-vpc" {
@@ -63,5 +63,5 @@ resource "aws_route_table_association" "private-rt" {
 resource "aws_route" "route-default-public-subnet" {
   route_table_id            = data.terraform_remote_state.tgw.outputs.PUBLIC_ROUTE_TABLE_ID_DEFAULT_VPC
   destination_cidr_block    = aws_subnet.main.cidr_block
-  transit_gateway_id        = var.TGW_ID
+  transit_gateway_id        = data.terraform_remote_state.tgw.outputs.TGW_ID
 }
