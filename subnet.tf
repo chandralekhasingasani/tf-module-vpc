@@ -9,15 +9,3 @@ resource "aws_subnet" "main" {
   }
 }
 
-resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.main.id
-  tags = {
-    Name = "${var.COMPONENT}-${var.ENV}-public"
-  }
-}
-
-resource "aws_route_table_association" "a" {
-  count          = length(aws_subnet.main.*.id)
-  subnet_id      = element(aws_subnet.main.*.id, count.index)
-  route_table_id = aws_route_table.public.id
-}
