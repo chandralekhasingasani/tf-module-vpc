@@ -7,6 +7,10 @@ data "terraform_remote_state" "tgw" {
   }
 }
 
+output "NAT_GW_IP" {
+  value = data.terraform_remote_state.tgw.outputs.NAT_GW_IP
+}
+
 resource "aws_ec2_transit_gateway_vpc_attachment" "app-vpc" {
 
   tags = {
